@@ -4,8 +4,25 @@
 
 Поведінку ядра відтворено з оригінальної програми `MicrocontrollerSimulator64` декомпіляцією бінарника. Файли програм `.txt` сумісні з оригіналом.
 
-- **Десктоп**: Windows / macOS / Linux (Tauri 2)
-- **Веб**: статичний сайт, працює без встановлення
+- **Веб-версія без встановлення:** https://unicodeqw.github.io/microcontroller-simulator/
+- **Десктоп (Windows, macOS, Linux):** інсталятори на сторінці [Releases](https://github.com/unicodeqw/microcontroller-simulator/releases/latest)
+
+Інсталятори не підписані сертифікатом розробника. Windows SmartScreen попередить про невідомого видавця: натисніть «Докладніше», потім «Однаково запустити». На macOS відкрийте програму правим кліком і пунктом «Відкрити».
+
+## Випуск нової версії
+
+1. Змініть `version` в `app/package.json`: звідти її бере Tauri.
+2. Закомітьте зміну, створіть тег і надішліть його:
+
+```bash
+git tag v1.0.1
+```
+
+```bash
+git push origin v1.0.1
+```
+
+Workflow `Release` збере інсталятори для Windows, macOS (Apple Silicon та Intel) і Linux та прикріпить їх до релізу. Веб-версія оновлюється автоматично після кожного push у `main` (workflow `Pages`).
 
 ## Інтерфейс
 
