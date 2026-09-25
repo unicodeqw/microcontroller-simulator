@@ -1,7 +1,7 @@
 {
   "name": "microcontroller-simulator",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "scripts": {
     "wasm": "wasm-pack build ../sim-wasm --target web --out-dir ../app/src/core/pkg --release --no-pack",
