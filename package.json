@@ -1,0 +1,14 @@
+{
+  "name": "microcontroller-simulator-workspace",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "postinstall": "npm --prefix app install",
+    "dev": "npm --prefix app run dev",
+    "desktop": "npm --prefix app run tauri dev",
+    "build:web": "npm --prefix app run build",
+    "build:desktop": "npm --prefix app run tauri build",
+    "test": "cargo test -p sim-core",
+    "check": "cargo test -p sim-core && npm --prefix app run typecheck && npm --prefix app run lint"
+  }
+}
