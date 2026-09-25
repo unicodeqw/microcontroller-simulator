@@ -1,0 +1,9 @@
+/target/
+node_modules/
+dist/
+/app/src/core/pkg/
+/app/src-tauri/gen/
+/reference/
+*.log
+.DS_Store
+.claude/

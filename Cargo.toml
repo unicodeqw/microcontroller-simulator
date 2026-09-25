@@ -1,0 +1,12 @@
+[workspace]
+resolver = "2"
+members = ["sim-core", "sim-wasm", "app/src-tauri"]
+
+[workspace.package]
+version = "1.0.0"
+edition = "2021"
+license = "MIT"
+
+[profile.release]
+opt-level = "s"
+lto = true

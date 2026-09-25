@@ -1,0 +1,12 @@
+[package]
+name = "sim-core"
+description = "Core of the 15-bit von Neumann microcontroller simulator (Lviv Polytechnic, Computer Architecture lab 1)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+serde = { version = "1", features = ["derive"], optional = true }
+
+[features]
+serde = ["dep:serde"]
