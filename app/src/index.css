@@ -1,0 +1,328 @@
+@import '@fontsource/ibm-plex-sans/400.css';
+@import '@fontsource/ibm-plex-sans/500.css';
+@import '@fontsource/ibm-plex-sans/600.css';
+@import '@fontsource/ibm-plex-sans-condensed/500.css';
+@import '@fontsource/ibm-plex-sans-condensed/600.css';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Дві площини: «машина» (передня панель і пам'ять) завжди темна, як
+ * пофарбований метал і димчастий пластик справжньої ЕОМ; «документація»
+ * (інформаційне вікно, довідка) змінюється разом із темою.
+ */
+:root {
+  --page: oklch(0.935 0.007 85);
+  --sheet: oklch(0.965 0.005 85);
+  --ink: oklch(0.25 0.012 250);
+  --ink-2: oklch(0.47 0.012 250);
+  --rule: oklch(0.84 0.01 85);
+  --focus: oklch(0.55 0.17 38);
+
+  /* Кольори полів команди для тексту на сторінці. */
+  --op: oklch(0.52 0.17 38);
+  --a0: oklch(0.55 0.12 75);
+  --a1: oklch(0.5 0.09 195);
+  --a2: oklch(0.48 0.08 255);
+
+  --danger: oklch(0.52 0.19 28);
+  --danger-bg: oklch(0.94 0.035 28);
+
+  /* Машина: однакова в обох темах. */
+  --panel: oklch(0.255 0.008 250);
+  --panel-hi: oklch(0.3 0.008 250);
+  --panel-lo: oklch(0.2 0.008 250);
+  --window: oklch(0.15 0.006 250);
+  --silk: oklch(0.9 0.008 85);
+  --silk-2: oklch(0.67 0.01 250);
+  --silk-rule: oklch(0.42 0.008 250);
+
+  --led-on: oklch(0.72 0.2 35);
+  --led-off: oklch(0.3 0.045 30);
+  --lamp-green: oklch(0.8 0.17 145);
+  --lamp-amber: oklch(0.84 0.15 80);
+  --lamp-red: oklch(0.66 0.22 28);
+  --lamp-white: oklch(0.96 0.02 90);
+
+  /* Пластикові ручки тумблерів за групами полів, як на PDP-8. */
+  --cap-op: oklch(0.6 0.17 38);
+  --cap-a0: oklch(0.8 0.13 82);
+  --cap-a1: oklch(0.7 0.09 195);
+  --cap-a2: oklch(0.62 0.07 255);
+  --cap-addr: oklch(0.88 0.01 85);
+
+  /* Кольори полів для підписів на панелі. */
+  --silk-op: oklch(0.72 0.15 38);
+  --silk-a0: oklch(0.83 0.12 82);
+  --silk-a1: oklch(0.76 0.09 195);
+  --silk-a2: oklch(0.72 0.07 255);
+
+  --phosphor: oklch(0.86 0.17 150);
+}
+
+.dark {
+  --page: oklch(0.165 0.006 250);
+  --sheet: oklch(0.2 0.007 250);
+  --ink: oklch(0.92 0.006 85);
+  --ink-2: oklch(0.7 0.01 250);
+  --rule: oklch(0.31 0.008 250);
+  --focus: oklch(0.72 0.15 38);
+
+  --op: oklch(0.72 0.15 38);
+  --a0: oklch(0.82 0.12 82);
+  --a1: oklch(0.76 0.09 195);
+  --a2: oklch(0.74 0.07 255);
+
+  --danger: oklch(0.72 0.17 28);
+  --danger-bg: oklch(0.28 0.06 28);
+
+  --panel: oklch(0.235 0.008 250);
+  --panel-hi: oklch(0.28 0.008 250);
+  --panel-lo: oklch(0.19 0.008 250);
+}
+
+@theme inline {
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Code', monospace;
+  --font-silk: 'IBM Plex Sans Condensed', 'IBM Plex Sans', sans-serif;
+  --color-page: var(--page);
+  --color-sheet: var(--sheet);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-rule: var(--rule);
+  --color-op: var(--op);
+  --color-a0: var(--a0);
+  --color-a1: var(--a1);
+  --color-a2: var(--a2);
+  --color-danger: var(--danger);
+  --color-danger-bg: var(--danger-bg);
+  --color-panel: var(--panel);
+  --color-window: var(--window);
+  --color-silk: var(--silk);
+  --color-silk-2: var(--silk-2);
+  --color-silk-rule: var(--silk-rule);
+  --color-silk-op: var(--silk-op);
+  --color-silk-a0: var(--silk-a0);
+  --color-silk-a1: var(--silk-a1);
+  --color-silk-a2: var(--silk-a2);
+  --color-led: var(--led-on);
+  --color-lamp-amber: var(--lamp-amber);
+  --color-phosphor: var(--phosphor);
+}
+
+html {
+  color-scheme: light;
+}
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@layer components {
+  /* ---- Корпус ------------------------------------------------------- */
+
+  /* Пофарбована металева панель: легкий градієнт дає відчуття площини, а не декор. */
+  .machine {
+    background: linear-gradient(180deg, var(--panel-hi), var(--panel) 18%, var(--panel) 82%, var(--panel-lo));
+    color: var(--silk);
+    border-radius: 6px;
+    box-shadow:
+      inset 0 1px 0 oklch(1 0 0 / 0.07),
+      inset 0 -1px 0 oklch(0 0 0 / 0.35),
+      0 1px 2px oklch(0 0 0 / 0.25);
+  }
+
+  /* Шовкографічний підпис на панелі. */
+  .silk {
+    font-family: var(--font-silk);
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--silk-2);
+    line-height: 1.2;
+  }
+
+  /* Лінія-скоба над групою світлодіодів або тумблерів. */
+  .bracket {
+    border-top: 1px solid currentColor;
+    border-left: 1px solid currentColor;
+    border-right: 1px solid currentColor;
+    height: 5px;
+    margin-top: 2px;
+    opacity: 0.8;
+  }
+
+  /* Вікно з димчастого пластику під індикаторами. */
+  .window {
+    background: var(--window);
+    border-radius: 3px;
+    box-shadow:
+      inset 0 1px 3px oklch(0 0 0 / 0.6),
+      0 1px 0 oklch(1 0 0 / 0.06);
+  }
+
+  /* ---- Світлодіод ----------------------------------------------------- */
+
+  .led {
+    display: inline-block;
+    width: var(--led-size, 0.7rem);
+    height: var(--led-size, 0.7rem);
+    border-radius: 999px;
+    background: radial-gradient(circle at 35% 30%, oklch(0.42 0.05 30), var(--led-off) 65%);
+    box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.45);
+    transition: background-color 60ms linear;
+  }
+  .led[data-on='true'] {
+    background: radial-gradient(circle at 35% 30%, oklch(0.93 0.08 60), var(--led-on) 55%);
+    box-shadow:
+      inset 0 0 0 1px oklch(0.5 0.15 30),
+      0 0 6px 1px oklch(0.72 0.2 35 / 0.55);
+  }
+
+  /* ---- Сигнальна лампа ------------------------------------------------ */
+
+  .lamp {
+    width: 1.5rem;
+    height: 1rem;
+    border-radius: 2px;
+    background: color-mix(in srgb, var(--lamp) 20%, oklch(0.18 0.005 250));
+    box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.5);
+  }
+  .lamp[data-on='true'] {
+    background: radial-gradient(ellipse at 50% 40%, oklch(0.99 0.02 90), var(--lamp) 70%);
+    box-shadow:
+      inset 0 0 0 1px oklch(0 0 0 / 0.25),
+      0 0 10px color-mix(in oklch, var(--lamp) 55%, transparent);
+  }
+
+  /* ---- Тумблер ------------------------------------------------------ */
+
+  .toggle {
+    position: relative;
+    width: var(--toggle-w, 1.4rem);
+    height: 2.4rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+  .toggle:disabled {
+    cursor: not-allowed;
+  }
+  /* Паз у панелі. */
+  .toggle-slot {
+    position: absolute;
+    inset: 0.15rem 0.2rem;
+    border-radius: 3px;
+    background: var(--window);
+    box-shadow: inset 0 1px 3px oklch(0 0 0 / 0.7);
+  }
+  /* Пластикова ручка: світліший край показує, куди вона нахилена. */
+  .toggle-paddle {
+    position: absolute;
+    left: 0.28rem;
+    right: 0.28rem;
+    height: 1.2rem;
+    top: 1rem;
+    border-radius: 2px;
+    background: linear-gradient(0deg, color-mix(in oklch, var(--cap) 70%, white), var(--cap) 45%, color-mix(in oklch, var(--cap) 70%, black));
+    box-shadow:
+      0 1px 0 oklch(1 0 0 / 0.25) inset,
+      0 2px 3px oklch(0 0 0 / 0.5);
+    transition: top 70ms ease-out;
+  }
+  .toggle[aria-checked='true'] .toggle-paddle {
+    top: 0.2rem;
+    background: linear-gradient(180deg, color-mix(in oklch, var(--cap) 70%, white), var(--cap) 45%, color-mix(in oklch, var(--cap) 70%, black));
+  }
+  .toggle:disabled .toggle-paddle {
+    filter: saturate(0.35) brightness(0.75);
+  }
+  .toggle:not(:disabled):hover .toggle-paddle {
+    filter: brightness(1.08);
+  }
+
+  /* ---- Клавіша ------------------------------------------------------ */
+
+  .key {
+    min-width: 5.25rem;
+    height: 2.6rem;
+    padding: 0 0.9rem;
+    border: 0;
+    border-radius: 4px;
+    font-family: var(--font-silk);
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--key-ink, var(--silk));
+    background: linear-gradient(180deg, color-mix(in oklch, var(--key-cap, oklch(0.36 0.008 250)) 85%, white), var(--key-cap, oklch(0.36 0.008 250)));
+    box-shadow:
+      0 1px 0 oklch(1 0 0 / 0.14) inset,
+      0 3px 0 color-mix(in oklch, var(--key-cap, oklch(0.36 0.008 250)) 55%, black),
+      0 4px 6px oklch(0 0 0 / 0.35);
+    transform: translateY(0);
+    transition: transform 50ms, box-shadow 50ms;
+    cursor: pointer;
+  }
+  .key:active:not(:disabled),
+  .key[data-latched='true'] {
+    transform: translateY(2px);
+    box-shadow:
+      0 1px 0 oklch(1 0 0 / 0.1) inset,
+      0 1px 0 color-mix(in oklch, var(--key-cap, oklch(0.36 0.008 250)) 55%, black),
+      0 1px 2px oklch(0 0 0 / 0.35);
+  }
+  .key:disabled {
+    cursor: not-allowed;
+    color: color-mix(in srgb, var(--key-ink, var(--silk)) 40%, transparent);
+    filter: saturate(0.3) brightness(0.8);
+  }
+  .key-run {
+    --key-cap: oklch(0.55 0.15 38);
+    --key-ink: oklch(0.98 0.01 85);
+  }
+
+  /* ---- Екран ЕОМ ------------------------------------------------------ */
+
+  .crt {
+    background: radial-gradient(ellipse at 50% 40%, oklch(0.2 0.02 160), oklch(0.13 0.01 160) 80%);
+    color: var(--phosphor);
+    border-radius: 6px;
+    box-shadow:
+      inset 0 0 0 1px oklch(0 0 0 / 0.6),
+      inset 0 2px 12px oklch(0 0 0 / 0.6);
+    text-shadow: 0 0 6px oklch(0.86 0.17 150 / 0.45);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+  }
+}
