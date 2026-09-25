@@ -38,6 +38,9 @@
       "icons/icon.ico"
     ],
     "shortDescription": "Microcontroller simulator (von Neumann, CISC)",
-    "category": "Education"
+    "category": "Education",
+    "macOS": {
+      "signingIdentity": "-"
+    }
   }
 }
