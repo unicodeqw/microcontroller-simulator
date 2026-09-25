@@ -1,0 +1,82 @@
+# Збирає десктопні інсталятори для Windows, macOS і Linux та додає їх до
+# GitHub Release. Запускається тегом v* (наприклад, v1.0.0) або вручну.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: windows-latest
+            args: ''
+            rust-targets: wasm32-unknown-unknown
+          - platform: macos-latest
+            args: --target aarch64-apple-darwin
+            rust-targets: wasm32-unknown-unknown,aarch64-apple-darwin
+          - platform: macos-latest
+            args: --target x86_64-apple-darwin
+            rust-targets: wasm32-unknown-unknown,x86_64-apple-darwin
+          - platform: ubuntu-22.04
+            args: ''
+            rust-targets: wasm32-unknown-unknown
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Системні бібліотеки для Linux
+        if: startsWith(matrix.platform, 'ubuntu')
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.rust-targets }}
+      - uses: Swatinem/rust-cache@v2
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: wasm-pack
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Залежності фронтенду
+        working-directory: app
+        run: npm ci
+
+      - uses: tauri-apps/tauri-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          projectPath: app
+          tagName: ${{ github.ref_type == 'tag' && github.ref_name || 'v__VERSION__' }}
+          releaseName: Microcontroller Simulator ${{ github.ref_type == 'tag' && github.ref_name || 'v__VERSION__' }}
+          releaseBody: |
+            Симулятор 15-бітного мікроконтролера з архітектурою фон Неймана до лабораторної роботи №1 з курсу «Архітектура комп'ютерів».
+
+            **Веб-версія без встановлення:** https://unicodeqw.github.io/microcontroller-simulator/
+
+            | ОС | Файл |
+            |---|---|
+            | Windows | `*_x64-setup.exe` або `*_x64_en-US.msi` |
+            | macOS (Apple Silicon) | `*_aarch64.dmg` |
+            | macOS (Intel) | `*_x64.dmg` |
+            | Linux | `*.AppImage`, `*.deb` або `*.rpm` |
+
+            Інсталятори не підписані сертифікатом розробника. Windows SmartScreen може попередити про невідомого видавця (натисніть «Докладніше» → «Однаково запустити»). На macOS відкрийте програму через правий клік → «Відкрити».
+          releaseDraft: false
+          prerelease: false
+          args: ${{ matrix.args }}
